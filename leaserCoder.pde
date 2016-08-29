@@ -34,20 +34,24 @@ int counter = 0;
 String output = "";
 
 void countSteps(float val, float ctime) {
-  counter++;
+  
   //currentTime = ctime;
   threshUp = updateThreshUp(val, threshUp);
   threshDown = updateThreshDown(val, threshDown);
 
-  if (val > (threshUp * (0.8)) && !isStepUp) {
+  if (val > (threshUp * (0.3)) && !isStepUp) {
     isStepUp = true;
+    counter++;
+    text(counter,ctime,320);
     cycletime = ctime - savedTime;
     savedTime = ctime;
 
     //Render
     ellipse(ctime, height/2.0 - val, 5, 5);
-  } else if (val < (threshDown * 1.8) && isStepUp) {
+  } else if (val < (threshDown * 6.0) && isStepUp) {
     isStepUp = false;
+        ellipse(ctime, height/2.0 - val, 5, 5);
+
   }
 
   if (isStepUp != pisStepUp) {
@@ -117,14 +121,14 @@ void draw() {
 }
 
 void display(int from, int untilNum) {
-  background(100);
+  background(0);
   float pval = 0;
   translate(-from, 0);
   for (int i = 0; i < untilNum; i++) {
     String tokens[] = split(lines[i], ",");
     float num = float(tokens[1]) - 900;
     float ctime = int(tokens[0]) / 1.0;
-    pval = pval * 0.1 + num * 0.9;
+    pval = pval * 0.0 + num * 1.0;
     pushStyle();
     stroke(255);
     point(ctime, height/2.0 - pval);
